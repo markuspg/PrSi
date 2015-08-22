@@ -23,6 +23,7 @@ from bounds import Bounds
 from builder import Builder
 from measure import Measure
 from problem import Problem
+from solver import Solver
 
 class Analyzer:
     def __init__( self, argProblemsFileName ):
@@ -41,6 +42,8 @@ class Analyzer:
                 measure = Measure( problem )
                 bounds = Bounds( measure, problem )
                 bounds.CalculateBounds()
+                solver = Solver( bounds, measure, problem )
+                solver.Solve()
                 measure.Write()
         print( "Finished analyzer run" )
 
