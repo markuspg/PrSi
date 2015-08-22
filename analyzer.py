@@ -20,6 +20,7 @@
 ##############################################################################
 
 from builder import Builder
+from measure import Measure
 from problem import Problem
 
 class Analyzer:
@@ -36,6 +37,8 @@ class Analyzer:
                 print( "=> Problem #" + str( problemIndex ) + " will be analyzed" )
                 builder = Builder( line )
                 problem = Problem( builder )
+                measure = Measure( problem )
+                measure.Write()
         print( "Finished analyzer run" )
 
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
