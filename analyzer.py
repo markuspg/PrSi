@@ -21,24 +21,9 @@
 ##
 ##############################################################################
 
-import sys
-
-from analyzer import Analyzer
-
-def main():
-    print( "   <---- PrSi: Python reference Solver implementation ---->\n" )
-    
-    if len( sys.argv) < 2:
-        print( "Too few arguments given. Please give at least one problems file as argument. ")
-        return 0
-    
-    # All loading, solving and analyzing work is done in 'Analyzer'
-    for i in range( len ( sys.argv ) - 1 ):
-        analyzer = Analyzer( sys.argv[ i + 1 ] )
-    
-    return 0
-
-if __name__ == "__main__":
-    main()
+class Analyzer:
+    def __init__( self, argProblemsFileName ):
+        self.problemsFileName = argProblemsFileName
+        print( "Will analyze problems loaded from {0}".format( self.problemsFileName ) )
 
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
