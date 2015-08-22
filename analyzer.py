@@ -25,5 +25,14 @@ class Analyzer:
     def __init__( self, argProblemsFileName ):
         self.problemsFileName = argProblemsFileName
         print( "Will analyze problems loaded from {0}".format( self.problemsFileName ) )
+    
+    def Run( self ):
+        print( "Analyzing problems" )
+        with open( self.problemsFileName, 'rt' ) as problemsFile:
+            problemIndex = 0
+            for line in problemsFile:
+                problemIndex = problemIndex + 1
+                print( "=> Problem #" + str( problemIndex ) + " will be analyzed" )
+        print( "Finished analyzer run" )
 
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4

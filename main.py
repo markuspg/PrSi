@@ -35,6 +35,7 @@ def main():
     # All loading, solving and analyzing work is done in 'Analyzer'
     for i in range( len ( sys.argv ) - 1 ):
         analyzer = Analyzer( sys.argv[ i + 1 ] )
+        analyzer.Run()
     
     return 0
 
