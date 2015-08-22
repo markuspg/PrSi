@@ -19,23 +19,10 @@
 ##
 ##############################################################################
 
-from builder import Builder
-from problem import Problem
-
-class Analyzer:
-    def __init__( self, argProblemsFileName ):
-        self.problemsFileName = argProblemsFileName
-        print( "Will analyze problems loaded from {0}".format( self.problemsFileName ) )
-    
-    def Run( self ):
-        print( "Analyzing problems" )
-        with open( self.problemsFileName, 'rt' ) as problemsFile:
-            problemIndex = 0
-            for line in problemsFile:
-                problemIndex = problemIndex + 1
-                print( "=> Problem #" + str( problemIndex ) + " will be analyzed" )
-                builder = Builder( line )
-                problem = Problem( builder )
-        print( "Finished analyzer run" )
+class Problem:
+    def __init__( self, argBuilder ):
+        print( "  Problem constructor" )
+        self.problemName = argBuilder.problemName
+        print( "    Creating problem: {0}".format( self.problemName ) )
 
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
