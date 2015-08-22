@@ -19,6 +19,7 @@
 ##
 ##############################################################################
 
+from bounds import Bounds
 from builder import Builder
 from measure import Measure
 from problem import Problem
@@ -38,6 +39,8 @@ class Analyzer:
                 builder = Builder( line )
                 problem = Problem( builder )
                 measure = Measure( problem )
+                bounds = Bounds( measure, problem )
+                bounds.CalculateBounds()
                 measure.Write()
         print( "Finished analyzer run" )
 
