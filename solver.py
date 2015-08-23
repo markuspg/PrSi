@@ -20,13 +20,14 @@
 ##############################################################################
 
 class Solver:
-    def __init__( self, argBounds, argMeasure, argProblem ):
+    def __init__( self, argBounds, argHeuristicToUse, argMeasure, argProblem ):
         print( "  Solver constructor" )
         self.bounds = argBounds
+        self.heuristic = argHeuristicToUse
         self.measure = argMeasure
         self.problem = argProblem
     
     def Solve( self ):
-        print( "    Solving problem ..." )
+        print( "    Solving problem using '{0}'".format( self.heuristic ) )
 
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
