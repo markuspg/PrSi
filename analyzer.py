@@ -28,7 +28,8 @@ from solver import Solver
 class Analyzer:
     def __init__( self, argProblemsFileName ):
         self.problemsFileName = argProblemsFileName
-        print( "Will analyze problems loaded from {0}".format( self.problemsFileName ) )
+        self.problemType = argProblemsFileName.rpartition( '.' )[ -1 ].upper()
+        print( "Will analyze problems of type '{0}' loaded from '{1}'".format( self.problemType, self.problemsFileName ) )
     
     def Run( self ):
         print( "Analyzing problems" )
@@ -37,7 +38,7 @@ class Analyzer:
             for line in problemsFile:
                 problemIndex = problemIndex + 1
                 print( "=> Problem #" + str( problemIndex ) + " will be analyzed" )
-                builder = Builder( line )
+                builder = Builder( line, self.problemType )
                 problem = Problem( builder )
                 measure = Measure( problem )
                 bounds = Bounds( measure, problem )

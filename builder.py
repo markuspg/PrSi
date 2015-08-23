@@ -20,11 +20,33 @@
 ##############################################################################
 
 class Builder:
-    def __init__( self, argProblemString ):
+    def __init__( self, argProblemString, argProblemType ):
+        # First load data common to all problems
         print( "  Builder constructor" )
         self.problemItems = argProblemString.rstrip( '\n' ).split( '|' )
         # print( self.problemItems )
-        self.problemName = self.problemItems[0]
-        print( "    Building problem: {0}".format( self.problemName ) )
+        self.problemName = self.problemItems[0].rpartition( '/' )[ -1 ]
+        self.problemType = argProblemType
+        print( "    Building {0}-problem: {1}".format( self.problemType, self.problemName ) )
+        
+        # Then load problem specific data or fail, if an unknown problem was given
+        if self.problemType == "QAP":
+            assert len( self.problemItems ) == 4
+            self.problemSize = int( self.problemItems[ 1 ] )
+            self.flowMatrix = self.LoadMatrix( self.problemItems[ 2 ], self.problemSize, self.problemSize )
+            # print( self.flowMatrix )
+            self.distanceMatrix = self.LoadMatrix( self.problemItems[ 3 ], self.problemSize, self.problemSize )
+            # print( self.distanceMatrix )
+        else:
+            raise ValueError( "Invalid problem type encountered in 'Builder'" )
+        print( "      Problem size: {0}".format( self.problemSize ) )
+    
+    def LoadMatrix( self, argList, argXSize, argYSize ):
+        matrixItems = argList.split( ';' )
+        assert len( matrixItems ) == argXSize * argYSize
+        matrix = list()
+        for i in range( argXSize ):
+            matrix.append( matrixItems[ i * argXSize : ( i * argXSize ) + argXSize ] )
+        return matrix
 
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
