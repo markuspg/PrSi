@@ -28,13 +28,13 @@ from analyzer import Analyzer
 def main():
     print( "   <---- PrSi: Python reference Solver implementation ---->\n" )
     
-    if len( sys.argv) < 2:
-        print( "Too few arguments given. Please give at least one problems file as argument. ")
+    if len( sys.argv ) < 3:
+        print( "Too few arguments given. Please pass the metaheuristic to use (AC|GA|TS) and the file(s) containing the problems." )
         return 0
     
     # All loading, solving and analyzing work is done in 'Analyzer'
-    for i in range( len ( sys.argv ) - 1 ):
-        analyzer = Analyzer( sys.argv[ i + 1 ] )
+    for i in range( len ( sys.argv ) - 2 ):
+        analyzer = Analyzer( sys.argv[ 1 ], sys.argv[ i + 2 ] )
         analyzer.Run()
     
     return 0
