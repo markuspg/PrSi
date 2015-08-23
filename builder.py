@@ -46,7 +46,7 @@ class Builder:
         assert len( matrixItems ) == argXSize * argYSize
         matrix = list()
         for i in range( argXSize ):
-            matrix.append( matrixItems[ i * argXSize : ( i * argXSize ) + argXSize ] )
+            matrix.append( [ int( x ) for x in matrixItems[ i * argXSize : ( i * argXSize ) + argXSize ] ] )
         return matrix
 
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
