@@ -23,6 +23,7 @@ from bounds import Bounds
 from builder import Builder
 from measure import Measure
 from problem import Problem
+from qap import QAP
 from solver import Solver
 
 class Analyzer:
@@ -30,6 +31,13 @@ class Analyzer:
         self.problemsFileName = argProblemsFileName
         self.problemType = argProblemsFileName.rpartition( '.' )[ -1 ].upper()
         print( "Will analyze problems of type '{0}' loaded from '{1}'".format( self.problemType, self.problemsFileName ) )
+    
+    def LoadProblem( self, argBuilder ):
+        if argBuilder.problemType == "QAP":
+            # print( "  Trying to construct a QAP instance" )
+            return QAP( argBuilder )
+        else:
+            raise ValueError( "Invalid problem type encountered in 'LoadProblem' of 'Analyzer'" )
     
     def Run( self ):
         print( "Analyzing problems" )
@@ -39,7 +47,7 @@ class Analyzer:
                 problemIndex = problemIndex + 1
                 print( "=> Problem #" + str( problemIndex ) + " will be analyzed" )
                 builder = Builder( line, self.problemType )
-                problem = Problem( builder )
+                problem = self.LoadProblem( builder )
                 measure = Measure( problem )
                 bounds = Bounds( measure, problem )
                 bounds.CalculateBounds()

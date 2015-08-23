@@ -22,6 +22,7 @@
 ##############################################################################
 
 from builder import Builder
+from qap import QAP
 
 def main():
     # Check for correct building of matrices
@@ -35,6 +36,15 @@ def main():
         builder = Builder( "test|3|1;2;3;4;5;6;7;8;9|1;10;100;1000;10000;1000;100;10;1", "FAP" )
     except ValueError:
         print( "[CHECK] Unknown problem was successfully caught" )
+        
+    # Check for correct creation of QAP
+    builder = Builder( "test|3|1;2;3;4;5;6;7;8;9|1;10;100;1000;10000;1000;100;10;1", "QAP" )
+    qap = QAP( builder )
+    assert qap.problemName == "test"
+    assert qap.problemSize == 3
+    assert qap.flowMatrix == [ [ 1, 2, 3 ], [ 4, 5, 6 ], [ 7, 8, 9 ] ]
+    assert qap.distanceMatrix == [ [ 1, 10, 100 ], [ 1000, 10000, 1000 ], [ 100, 10, 1 ] ]
+    print( "[CHECK] QAP was successfully constructed" )
     
     return 0
 
