@@ -53,7 +53,8 @@ class Analyzer:
                 measure = Measure( problem )
                 bounds = Bounds( measure, problem )
                 bounds.CalculateBounds()
-                solver = Solver( bounds, self.metaheuristicName, measure, problem )
+                helperTuple = bounds, measure, self.metaheuristicName, problem
+                solver = Solver( helperTuple )
                 solver.Solve()
                 measure.Write()
         print( "Finished analyzer run" )

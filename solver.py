@@ -22,15 +22,15 @@
 from manager_thread import ManagerThread
 
 class Solver:
-    def __init__( self, argBounds, argHeuristicToUse, argMeasure, argProblem ):
+    def __init__( self, argHelperTuple ):
         print( "  Solver constructor" )
-        self.bounds = argBounds
-        self.heuristic = argHeuristicToUse
-        self.measure = argMeasure
-        self.problem = argProblem
+        self.bounds = argHelperTuple[ 0 ]
+        self.heuristic = argHelperTuple[ 2 ]
+        self.measure = argHelperTuple[ 1 ]
+        self.problem = argHelperTuple[ 3 ]
         
         # The 'ManagerThread' is mandatory to control all other threads
-        self.managerThread = ManagerThread()
+        self.managerThread = ManagerThread( argHelperTuple )
         self.managerThread.start()
         print( "    Started managerThread" )
         # It is only separated for the reason of better clarity ...

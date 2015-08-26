@@ -23,8 +23,12 @@ import multiprocessing
 import threading
 
 class ManagerThread( threading.Thread ):
-    def __init__( self ):
+    def __init__( self, argHelperTuple ):
         super().__init__()
+        self.bounds = argHelperTuple[ 0 ]
+        self.heuristic = argHelperTuple[ 2 ]
+        self.measure = argHelperTuple[ 1 ]
+        self.problem = argHelperTuple[ 3 ]
         self.cpuCores = multiprocessing.cpu_count()
         print( "    Initializing ManagerThread to work on {0} cores".format( self.cpuCores ) )
     
