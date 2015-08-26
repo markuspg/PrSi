@@ -19,25 +19,15 @@
 ##
 ##############################################################################
 
-from manager_thread import ManagerThread
+import threading
 
-class Solver:
-    def __init__( self, argBounds, argHeuristicToUse, argMeasure, argProblem ):
-        print( "  Solver constructor" )
-        self.bounds = argBounds
-        self.heuristic = argHeuristicToUse
-        self.measure = argMeasure
-        self.problem = argProblem
-        
-        # The 'ManagerThread' is mandatory to control all other threads
-        self.managerThread = ManagerThread()
-        self.managerThread.start()
-        print( "    Started managerThread" )
-        # It is only separated for the reason of better clarity ...
-        # of the real thread quantity, so block until this thread finishes
-        self.managerThread.join()
+class ManagerThread( threading.Thread ):
+    def __init__( self ):
+        super().__init__()
+        print( "    ManagerThread constructor" )
     
-    def Solve( self ):
-        print( "    Solving problem using '{0}'".format( self.heuristic ) )
+    def run( self ):
+        print( "    [MANAGER_THREAD {0} START] Running manager".format( self.name ) )
+        print( "    [MANAGER_THREAD {0} FINISH] Finishing manager".format( self.name ) )
 
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
