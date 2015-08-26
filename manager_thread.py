@@ -19,12 +19,14 @@
 ##
 ##############################################################################
 
+import multiprocessing
 import threading
 
 class ManagerThread( threading.Thread ):
     def __init__( self ):
         super().__init__()
-        print( "    ManagerThread constructor" )
+        self.cpuCores = multiprocessing.cpu_count()
+        print( "    Initializing ManagerThread to work on {0} cores".format( self.cpuCores ) )
     
     def run( self ):
         print( "    [MANAGER_THREAD {0} START] Running manager".format( self.name ) )
