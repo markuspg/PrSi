@@ -58,6 +58,11 @@ def main():
     assert qap.ConvertRandomKeysToSolution( [ 0.5, 0.5, 0.0001 ] ) == "231", "Random key conversion failed for an equivalent of '231'"
     print( "[CHECK] Converting QAP random keys to solutions yielded valid results" )
     
+    testRandomKeysSolution = qap.CreateRandomRandomKeys()
+    assert len( testRandomKeysSolution ) == qap.problemSize, "Random random keys solution vector has an invalid size"
+    for item in testRandomKeysSolution:
+        assert isinstance( item, float ), "Wrong type of element in random random keys solution vector"
+    
     return 0
 
 if __name__ == "__main__":

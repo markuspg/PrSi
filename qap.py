@@ -19,6 +19,9 @@
 ##
 ##############################################################################
 
+import os
+import random
+
 class QAP:
     def __init__( self, argBuilder ):
         print( "  QAP constructor" )
@@ -49,5 +52,13 @@ class QAP:
             argRandomKeys[ argRandomKeys.index( min( argRandomKeys ) ) ] = float( "+Infinity" )
         
         return ''.join( [ x for x in solution ] )
+    
+    def CreateRandomRandomKeys( self ):
+        random.seed( os.urandom( 20 ) )
+        
+        # Create the new solution vector
+        solution = [ random.random() for i in range( self.problemSize ) ]
+        
+        return solution
 
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
