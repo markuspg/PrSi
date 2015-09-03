@@ -34,5 +34,20 @@ class QAP:
         
         # argSolution[ i ] - 1 is the plant, i is the location
         return sum( [ self.distanceMatrix[ int( argSolution[ i ] ) - 1][ i ] * self.flowMatrix[ int( argSolution[ i ] ) - 1][ i ] for i in range( len( argSolution ) ) ] )
+    
+    def ConvertRandomKeysToSolution( self, argRandomKeys ):
+        assert len( argRandomKeys ) == self.problemSize, "The random keys vector is of improper size and would not yield a valid solution"
+        
+        # Create the new solution vector
+        solution = [ None ] * len( argRandomKeys )
+        
+        # Check solution vector length's-times for the smallest element
+        for index in range( len( argRandomKeys ) ):
+            # Add the real index of the smallest element to the solution vector
+            solution[ argRandomKeys.index( min( argRandomKeys ) ) ] = str( index + 1 )
+            # Make the smallest element really big, so it is not brought into consideration anymore
+            argRandomKeys[ argRandomKeys.index( min( argRandomKeys ) ) ] = float( "+Infinity" )
+        
+        return ''.join( [ x for x in solution ] )
 
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4

@@ -52,6 +52,12 @@ def main():
     assert qap.CalculateObjectiveValue( "132" ) == 6081, "Objective value calculation failed for assignment '132'"
     print( "[CHECK] All QAP objective value calculations where correct" )
     
+    assert qap.ConvertRandomKeysToSolution( [ 0.05, 0.91, 0.95 ] ) == "123", "Random key conversion failed for an equivalent of '123'"
+    assert qap.ConvertRandomKeysToSolution( [ 0.05, 0.66, 0.65 ] ) == "132", "Random key conversion failed for an equivalent of '132'"
+    assert qap.ConvertRandomKeysToSolution( [ 0.99, 0.5, 0.0001 ] ) == "321", "Random key conversion failed for an equivalent of '321'"
+    assert qap.ConvertRandomKeysToSolution( [ 0.5, 0.5, 0.0001 ] ) == "231", "Random key conversion failed for an equivalent of '231'"
+    print( "[CHECK] Converting QAP random keys to solutions yielded valid results" )
+    
     return 0
 
 if __name__ == "__main__":
