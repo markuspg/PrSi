@@ -24,8 +24,15 @@ class QAP:
         print( "  QAP constructor" )
         self.problemName = argBuilder.problemName
         self.problemSize = argBuilder.problemSize
+        # The matrices' rows represent the plants, the columns represent the locations
         self.distanceMatrix = argBuilder.distanceMatrix
         self.flowMatrix = argBuilder.flowMatrix
         print( "    Creating QAP '{0}' of size {1}".format( self.problemName, self.problemSize ) )
+    
+    def CalculateObjectiveValue( self, argSolution ):
+        assert len( argSolution ) == self.problemSize, "The passed solution vector is of improper size"
+        
+        # argSolution[ i ] - 1 is the plant, i is the location
+        return sum( [ self.distanceMatrix[ int( argSolution[ i ] ) - 1][ i ] * self.flowMatrix[ int( argSolution[ i ] ) - 1][ i ] for i in range( len( argSolution ) ) ] )
 
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4

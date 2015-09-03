@@ -46,6 +46,12 @@ def main():
     assert qap.distanceMatrix == [ [ 1, 10, 100 ], [ 1000, 10000, 1000 ], [ 100, 10, 1 ] ]
     print( "[CHECK] QAP was successfully constructed" )
     
+    # Check for correct objective function value calculation
+    assert qap.CalculateObjectiveValue( "123" ) == 50010, "Objective value calculation failed for assignment '123'"
+    assert qap.CalculateObjectiveValue( "321" ) == 51000, "Objective value calculation failed for assignment '321'"
+    assert qap.CalculateObjectiveValue( "132" ) == 6081, "Objective value calculation failed for assignment '132'"
+    print( "[CHECK] All QAP objective value calculations where correct" )
+    
     return 0
 
 if __name__ == "__main__":
