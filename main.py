@@ -42,8 +42,8 @@ def main():
     print( "   <---- PrSi: Python reference Solver implementation ---->\n" )
     
     # All loading, solving and analyzing work is done in 'Analyzer'
-    for i in range( len ( sys.argv ) - 2 ):
-        analyzer = Analyzer( sys.argv[ 1 ], sys.argv[ i + 2 ] )
+    for problemInstancesFilePath in problemInstances:
+        analyzer = Analyzer( algorithmInstanceQuantities, problemInstancesFilePath )
         analyzer.Run()
     
     return 0

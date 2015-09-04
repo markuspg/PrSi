@@ -27,12 +27,11 @@ from qap import QAP
 from solver import Solver
 
 class Analyzer:
-    def __init__( self, argMetaheuristicName, argProblemsFileName ):
-        self.metaheuristicName = argMetaheuristicName
+    def __init__( self, argMetaheuristicQuantities, argProblemsFileName ):
+        self.metaheuristicQuantities = argMetaheuristicQuantities
         self.problemsFileName = argProblemsFileName
         self.problemType = argProblemsFileName.rpartition( '.' )[ -1 ].upper()
-        print( "Will analyze problems of type '{0}' loaded from '{1}' using '{2}'".format( self.problemType, self.problemsFileName, self.metaheuristicName ) )
-        assert self.metaheuristicName in [ "AC", "GA", "TS" ], "Invalid heuristic passed as first argument"
+        print( "Will analyze problems of type '{0}' loaded from '{1}' using '{2}'".format( self.problemType, self.problemsFileName, self.metaheuristicQuantities ) )
     
     def LoadProblem( self, argBuilder ):
         if argBuilder.problemType == "QAP":
@@ -53,7 +52,7 @@ class Analyzer:
                 measure = Measure( problem )
                 bounds = Bounds( measure, problem )
                 bounds.CalculateBounds()
-                helperTuple = bounds, measure, self.metaheuristicName, problem
+                helperTuple = bounds, measure, self.metaheuristicQuantities, problem
                 solver = Solver( helperTuple )
                 solver.Solve()
                 measure.Write()
