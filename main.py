@@ -21,16 +21,25 @@
 ##
 ##############################################################################
 
+import argparse
 import sys
 
 from analyzer import Analyzer
 
 def main():
-    print( "   <---- PrSi: Python reference Solver implementation ---->\n" )
+    parser = argparse.ArgumentParser( description = "An implementation and analyzer for parallized adaptive memory metaheuristics" )
+    parser.add_argument( "problemFiles", help = "The file(s) containing the problem instances to be solved", metavar = "PROBLEM FILE(S)", nargs = '+' )
+    parser.add_argument( "--ga", choices = range( 1, 11 ), help = "The number of cores to run the genetic algorithm", nargs = 1, type = int )
+    parser.add_argument( "--ts", choices = range( 1, 11 ), help = "The number of cores to run taboo search", nargs = 1, type = int )
+    args = parser.parse_args()
     
-    if len( sys.argv ) < 3:
-        print( "Too few arguments given. Please pass the metaheuristic to use (AC|GA|TS) and the file(s) containing the problems." )
-        return 0
+    if not args.ga and not args.ts:
+        raise RuntimeError( "There must either be specified a positive number of cores running genetic algorithm or of cores running a taboo search" )
+    
+    algorithmInstanceQuantities = { "ga": args.ga, "ts": args.ts }
+    problemInstances = args.problemFiles
+    
+    print( "   <---- PrSi: Python reference Solver implementation ---->\n" )
     
     # All loading, solving and analyzing work is done in 'Analyzer'
     for i in range( len ( sys.argv ) - 2 ):
