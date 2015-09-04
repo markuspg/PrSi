@@ -22,6 +22,7 @@
 ##############################################################################
 
 import argparse
+import multiprocessing
 import sys
 
 from analyzer import Analyzer
@@ -35,6 +36,9 @@ def main():
     
     if not args.ga and not args.ts:
         raise RuntimeError( "There must either be specified a positive number of cores running genetic algorithm or of cores running a taboo search" )
+    
+    if args.ga[ 0 ] + args.ts[ 0 ] + 1 > multiprocessing.cpu_count():
+        raise RuntimeError( "The number of requested cores '{0}' (+1 managing core) is bigger than the physically available quantity of '{1}' cores".format( args.ga + args.ts, multiprocessing.cpu_count() ) )
     
     algorithmInstanceQuantities = { "ga": args.ga, "ts": args.ts }
     problemInstances = args.problemFiles

@@ -25,7 +25,7 @@ class Solver:
     def __init__( self, argHelperTuple ):
         print( "  Solver constructor" )
         self.bounds = argHelperTuple[ 0 ]
-        self.heuristic = argHelperTuple[ 2 ]
+        self.heuristicQuantities = argHelperTuple[ 2 ]
         self.measure = argHelperTuple[ 1 ]
         self.problem = argHelperTuple[ 3 ]
         
@@ -38,6 +38,6 @@ class Solver:
         self.managerThread.join()
     
     def Solve( self ):
-        print( "    Solving problem using '{0}'".format( self.heuristic ) )
+        print( "    Solving problem using '{0}'".format( self.heuristicQuantities ) )
 
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4

@@ -26,7 +26,9 @@ class ManagerThread( threading.Thread ):
     def __init__( self, argHelperTuple ):
         super().__init__()
         self.bounds = argHelperTuple[ 0 ]
-        self.heuristic = argHelperTuple[ 2 ]
+        self.gaInstances = int( argHelperTuple[ 2 ][ "ga" ] )
+        self.heuristicQuantities = argHelperTuple[ 2 ]
+        self.tsInstances = int( argHelperTuple[ 2 ][ "ts" ] )
         self.measure = argHelperTuple[ 1 ]
         self.problem = argHelperTuple[ 3 ]
         self.cpuCores = multiprocessing.cpu_count()
