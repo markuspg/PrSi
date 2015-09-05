@@ -31,8 +31,9 @@ class ManagerThread( threading.Thread ):
         self.gaInstances = int( argHelperTuple[ 2 ][ "ga" ][ 0 ] )
         self.gaThreads = list()
         self.heuristicQuantities = argHelperTuple[ 2 ]
+        self.nMaxIterations = 1000000
         self.tsInstances = int( argHelperTuple[ 2 ][ "ts" ][ 0 ] )
-        self.tsGlobalMemory = [ None for i in range( self.tsInstances ) ]
+        self.tsGlobalMemory = TabuSearchReferenceSolutions( self.tsInstances )
         self.tsThreads = list()
         self.measure = argHelperTuple[ 1 ]
         self.problem = argHelperTuple[ 3 ]

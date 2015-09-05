@@ -19,7 +19,13 @@
 ##
 ##############################################################################
 
+import copy
 import threading
+
+class TabuSearchReferenceSolutions:
+    def __init__( self, argSize ):
+        self.size = argSize
+        self.solutions = [ TabuSearchSolution for x in range ( self.size ) ]
 
 class TabuSearchSolution:
     def __init__( self ):
@@ -30,6 +36,7 @@ class TabooSearch( threading.Thread ):
         super().__init__()
         self.aspirationCriterion = argAspirationCriterion
         self.assignedReferenceSetLocation = argGlobalReferenceSet[ argID ]
+        self.bestSolution = float( "+Infinity" )
         self.globalReferenceSetIndex = argID
         self.globalReferenceSet = argGlobalReferenceSet
         self.iD = argID
@@ -38,6 +45,17 @@ class TabooSearch( threading.Thread ):
         self.stoppingCriterion = argStoppingCriterion
         self.tabuTenure = argTabuTenure
         print( "      Constructing TabooSearch instance with name '{0}' and initial solution {1}".format( self.name, self.solution ) )
+    
+    def Iteration( self ):
+        tempSol = [ [ None for x in range( len( self.solution ) ) ] for y in range( len( self.solution ) ) ]
+        # Evaluate the complete neighbourhood accessible by simple swaps
+        for i in range( len( self.solution ) ):
+            for j in range( len( self.solution ) ):
+                tempSolution = self.solution[ : ]
+                tempValue = tempSolution[ i ]
+                tempSolution[ i ] = tempSolution[ j ]
+                tempSolution[ j ] = tempValue
+                tempSol[ i ][ j ] = self.problem.CalculateObjectiveValue( self.problem.ConvertRandomKeysToSolution( tempSolution ) )
     
     def run( self ):
         print( "    [TABOO_SEARCH_THREAD {0} START]".format( self.name ) )
