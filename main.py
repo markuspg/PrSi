@@ -30,8 +30,8 @@ from analyzer import Analyzer
 def main():
     parser = argparse.ArgumentParser( description = "An implementation and analyzer for parallized adaptive memory metaheuristics" )
     parser.add_argument( "problemFiles", help = "The file(s) containing the problem instances to be solved", metavar = "PROBLEM FILE(S)", nargs = '+' )
-    parser.add_argument( "--ga", choices = range( 1, 11 ), help = "The number of cores to run the genetic algorithm", nargs = 1, type = int )
-    parser.add_argument( "--ts", choices = range( 1, 11 ), help = "The number of cores to run taboo search", nargs = 1, type = int )
+    parser.add_argument( "--ga", choices = range( 0, 11 ), default = [ 0 ], help = "The number of cores to run the genetic algorithm", nargs = 1, type = int )
+    parser.add_argument( "--ts", choices = range( 0, 11 ), default = [ 0 ], help = "The number of cores to run taboo search", nargs = 1, type = int )
     args = parser.parse_args()
     
     if not args.ga and not args.ts:
