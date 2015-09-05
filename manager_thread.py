@@ -19,6 +19,7 @@
 ##
 ##############################################################################
 
+import ga
 import multiprocessing
 import threading
 import ts
@@ -28,6 +29,7 @@ class ManagerThread( threading.Thread ):
         super().__init__()
         self.bounds = argHelperTuple[ 0 ]
         self.gaInstances = int( argHelperTuple[ 2 ][ "ga" ][ 0 ] )
+        self.gaThreads = list()
         self.heuristicQuantities = argHelperTuple[ 2 ]
         self.tsInstances = int( argHelperTuple[ 2 ][ "ts" ][ 0 ] )
         self.tsThreads = list()
@@ -36,10 +38,23 @@ class ManagerThread( threading.Thread ):
         self.cpuCores = multiprocessing.cpu_count()
         print( "    Initializing ManagerThread to work on {0} cores".format( self.cpuCores ) )
     
+    def CreateRandomPopulation( self ):
+        population = list()
+        for i in range( ga.GeneticAlgorithm.populationSize ):
+            population.append( self.problem.CreateRandomRandomKeys() )
+            # print( population[ -1 ] )
+        
+        # print( "      Created a random population of size {0}".format( len( population ) ) )
+        return population
+    
     def run( self ):
         print( "    [MANAGER_THREAD {0} START] Running manager".format( self.name ) )
+        for i in range( self.gaInstances ):
+            self.gaThreads.append( ga.GeneticAlgorithm( self.CreateRandomPopulation() ) )
         for i in range( self.tsInstances ):
             self.tsThreads.append( ts.TabooSearch( self.problem.CreateRandomRandomKeys() ) )
+        for thread in self.gaThreads:
+            thread.start()
         for thread in self.tsThreads:
             thread.start()
         print( "    [MANAGER_THREAD {0} FINISH] Finishing manager".format( self.name ) )
