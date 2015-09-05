@@ -19,25 +19,16 @@
 ##
 ##############################################################################
 
-from manager_thread import ManagerThread
+import threading
 
-class Solver:
-    def __init__( self, argHelperTuple ):
-        print( "  Solver constructor" )
-        self.bounds = argHelperTuple[ 0 ]
-        self.heuristicQuantities = argHelperTuple[ 2 ]
-        self.measure = argHelperTuple[ 1 ]
-        self.problem = argHelperTuple[ 3 ]
-        
-        # The 'ManagerThread' is mandatory to control all other threads
-        self.managerThread = ManagerThread( argHelperTuple )
+class TabooSearch( threading.Thread ):
+    def __init__( self, argInitialSolution ):
+        super().__init__()
+        self.solution = argInitialSolution
+        print( "      Constructing TabooSearch instance with name '{0}' and initial solution {1}".format( self.name, self.solution ) )
     
-    def Solve( self ):
-        print( "    Solving problem using '{0}'".format( self.heuristicQuantities ) )
-        self.managerThread.start()
-        print( "    Started managerThread" )
-        # It is only separated for the reason of better clarity ...
-        # of the real thread quantity, so block until this thread finishes
-        self.managerThread.join()
+    def run( self ):
+        print( "    [TABOO_SEARCH_THREAD {0} START]".format( self.name ) )
+        print( "    [TABOO_SEARCH_THREAD {0} FINISH]".format( self.name ) )
 
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4

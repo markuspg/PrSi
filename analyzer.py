@@ -46,7 +46,7 @@ class Analyzer:
             problemIndex = 0
             for line in problemsFile:
                 problemIndex = problemIndex + 1
-                print( "=> Problem #" + str( problemIndex ) + " will be analyzed" )
+                print( "\n=> Problem #" + str( problemIndex ) + " will be analyzed" )
                 builder = Builder( line, self.problemType )
                 problem = self.LoadProblem( builder )
                 measure = Measure( problem )

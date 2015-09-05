@@ -21,14 +21,16 @@
 
 import multiprocessing
 import threading
+import ts
 
 class ManagerThread( threading.Thread ):
     def __init__( self, argHelperTuple ):
         super().__init__()
         self.bounds = argHelperTuple[ 0 ]
-        self.gaInstances = int( argHelperTuple[ 2 ][ "ga" ] )
+        self.gaInstances = int( argHelperTuple[ 2 ][ "ga" ][ 0 ] )
         self.heuristicQuantities = argHelperTuple[ 2 ]
-        self.tsInstances = int( argHelperTuple[ 2 ][ "ts" ] )
+        self.tsInstances = int( argHelperTuple[ 2 ][ "ts" ][ 0 ] )
+        self.tsThreads = list()
         self.measure = argHelperTuple[ 1 ]
         self.problem = argHelperTuple[ 3 ]
         self.cpuCores = multiprocessing.cpu_count()
@@ -36,6 +38,10 @@ class ManagerThread( threading.Thread ):
     
     def run( self ):
         print( "    [MANAGER_THREAD {0} START] Running manager".format( self.name ) )
+        for i in range( self.tsInstances ):
+            self.tsThreads.append( ts.TabooSearch( self.problem.CreateRandomRandomKeys() ) )
+        for thread in self.tsThreads:
+            thread.start()
         print( "    [MANAGER_THREAD {0} FINISH] Finishing manager".format( self.name ) )
 
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
