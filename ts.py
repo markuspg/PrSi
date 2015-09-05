@@ -21,10 +21,22 @@
 
 import threading
 
+class TabuSearchSolution:
+    def __init__( self ):
+        self.updatedFlag = None
+
 class TabooSearch( threading.Thread ):
-    def __init__( self, argInitialSolution ):
+    def __init__( self, argAspirationCriterion, argGlobalReferenceSet, argID, argInitialSolution, argProblem, argStoppingCriterion, argTabuTenure ):
         super().__init__()
+        self.aspirationCriterion = argAspirationCriterion
+        self.assignedReferenceSetLocation = argGlobalReferenceSet[ argID ]
+        self.globalReferenceSetIndex = argID
+        self.globalReferenceSet = argGlobalReferenceSet
+        self.iD = argID
+        self.problem = argProblem
         self.solution = argInitialSolution
+        self.stoppingCriterion = argStoppingCriterion
+        self.tabuTenure = argTabuTenure
         print( "      Constructing TabooSearch instance with name '{0}' and initial solution {1}".format( self.name, self.solution ) )
     
     def run( self ):

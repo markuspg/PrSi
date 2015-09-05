@@ -24,9 +24,10 @@ import threading
 class GeneticAlgorithm( threading.Thread ):
     populationSize = 50
     
-    def __init__( self, argInitialPopulation ):
+    def __init__( self, argInitialPopulation, argProblem ):
         super().__init__()
         self.population = argInitialPopulation
+        self.problem = argProblem
         print( "      Constructing GeneticAlgorithm instance with name '{0}'".format( self.name ) )
     
     def run( self ):

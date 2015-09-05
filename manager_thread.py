@@ -32,6 +32,7 @@ class ManagerThread( threading.Thread ):
         self.gaThreads = list()
         self.heuristicQuantities = argHelperTuple[ 2 ]
         self.tsInstances = int( argHelperTuple[ 2 ][ "ts" ][ 0 ] )
+        self.tsGlobalMemory = [ None for i in range( self.tsInstances ) ]
         self.tsThreads = list()
         self.measure = argHelperTuple[ 1 ]
         self.problem = argHelperTuple[ 3 ]
@@ -50,9 +51,9 @@ class ManagerThread( threading.Thread ):
     def run( self ):
         print( "    [MANAGER_THREAD {0} START] Running manager".format( self.name ) )
         for i in range( self.gaInstances ):
-            self.gaThreads.append( ga.GeneticAlgorithm( self.CreateRandomPopulation() ) )
+            self.gaThreads.append( ga.GeneticAlgorithm( self.CreateRandomPopulation(), self.problem ) )
         for i in range( self.tsInstances ):
-            self.tsThreads.append( ts.TabooSearch( self.problem.CreateRandomRandomKeys() ) )
+            self.tsThreads.append( ts.TabooSearch( self.problem.CreateRandomRandomKeys(), self.problem ) )
         for thread in self.gaThreads:
             thread.start()
         for thread in self.tsThreads:
