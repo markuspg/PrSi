@@ -34,7 +34,7 @@ def main():
     parser.add_argument( "--ts", choices = range( 0, 11 ), default = [ 0 ], help = "The number of cores to run taboo search", nargs = 1, type = int )
     args = parser.parse_args()
     
-    if not args.ga and not args.ts:
+    if args.ga == [ 0 ] and args.ts == [ 0 ]:
         raise RuntimeError( "There must either be specified a positive number of cores running genetic algorithm or of cores running a taboo search" )
     
     if args.ga[ 0 ] + args.ts[ 0 ] + 1 > multiprocessing.cpu_count():
