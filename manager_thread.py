@@ -33,7 +33,7 @@ class ManagerThread( threading.Thread ):
         self.heuristicQuantities = argHelperTuple[ 2 ]
         self.nMaxIterations = 1000000
         self.tsInstances = int( argHelperTuple[ 2 ][ "ts" ][ 0 ] )
-        self.tsGlobalMemory = TabuSearchReferenceSolutions( self.tsInstances )
+        self.tsGlobalMemory = ts.TabuSearchReferenceSolutions( self.tsInstances )
         self.tsThreads = list()
         self.measure = argHelperTuple[ 1 ]
         self.problem = argHelperTuple[ 3 ]
@@ -51,6 +51,7 @@ class ManagerThread( threading.Thread ):
     
     def run( self ):
         print( "    [MANAGER_THREAD {0} START] Running manager".format( self.name ) )
+        # Initialize
         for i in range( self.gaInstances ):
             self.gaThreads.append( ga.GeneticAlgorithm( self.CreateRandomPopulation(), self.problem ) )
         for i in range( self.tsInstances ):
@@ -59,6 +60,8 @@ class ManagerThread( threading.Thread ):
             thread.start()
         for thread in self.tsThreads:
             thread.start()
+        
+        # Start search
         print( "    [MANAGER_THREAD {0} FINISH] Finishing manager".format( self.name ) )
 
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
