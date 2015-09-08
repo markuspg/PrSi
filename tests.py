@@ -22,6 +22,7 @@
 ##############################################################################
 
 from builder import Builder
+from matrix import Matrix
 from qap import QAP
 
 def main():
@@ -62,6 +63,14 @@ def main():
     assert len( testRandomKeysSolution ) == qap.problemSize, "Random random keys solution vector has an invalid size"
     for item in testRandomKeysSolution:
         assert isinstance( item, float ), "Wrong type of element in random random keys solution vector"
+    
+    # Test the Matrix class
+    testmatrix = Matrix( None, 3, 5 )
+    # Check the amount of rows
+    assert len( testmatrix.matrix ) == 3, "Wrong quantity of rows"
+    # Check the amount of columns
+    assert len( testmatrix.matrix[ 0 ] ) == 5, "Wrong quantity of columns"
+    print( "[CHECK] Matrix tests completed successfully" )
     
     return 0
 
