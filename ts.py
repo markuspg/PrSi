@@ -20,6 +20,7 @@
 ##############################################################################
 
 import copy
+import sys
 import threading
 
 class TabuSearchReferenceSolutions:
@@ -53,15 +54,19 @@ class TabooSearch( threading.Thread ):
         print( "      Constructing TabooSearch instance with name '{0}' and initial solution {1}".format( self.name, self.solution ) )
     
     def Iteration( self ):
-        tempSol = [ [ None for x in range( len( self.solution ) ) ] for y in range( len( self.solution ) ) ]
+        # Create a matrix storing all the costs related to the swaps
+        tempSol = [ [ sys.maxsize for x in range( len( self.solution ) ) ] for y in range( len( self.solution ) ) ]
         # Evaluate the complete neighbourhood accessible by simple swaps
         for i in range( len( self.solution ) ):
             for j in range( len( self.solution ) ):
-                tempSolution = self.solution[ : ]
-                tempValue = tempSolution[ i ]
-                tempSolution[ i ] = tempSolution[ j ]
-                tempSolution[ j ] = tempValue
-                tempSol[ i ][ j ] = self.problem.CalculateObjectiveValue( self.problem.ConvertRandomKeysToSolution( tempSolution ) )
+                # Only calculate necessary values (the matrix is a mirroring one)
+                if j > i:
+                    tempSolution = self.solution[ : ]
+                    tempValue = tempSolution[ i ]
+                    tempSolution[ i ] = tempSolution[ j ]
+                    tempSolution[ j ] = tempValue
+                    # Calculate and store the objective function value
+                    tempSol[ i ][ j ] = self.problem.CalculateObjectiveValue( self.problem.ConvertRandomKeysToSolution( tempSolution ) )
     
     def run( self ):
         print( "    [TABOO_SEARCH_THREAD {0} START]".format( self.name ) )
