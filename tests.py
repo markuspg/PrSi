@@ -70,6 +70,14 @@ def main():
     assert len( testmatrix.matrix ) == 3, "Wrong quantity of rows"
     # Check the amount of columns
     assert len( testmatrix.matrix[ 0 ] ) == 5, "Wrong quantity of columns"
+    # Test the Matrix class using the construction method from semicolon separated values
+    testmatrix = Matrix.FromSSV( "1;2;3;4;5;6;7;8;9;10;11;12", 3, 4 )
+    # Check the amount of rows
+    assert len( testmatrix.matrix ) == 3, "Wrong quantity of rows"
+    # Check the amount of columns
+    assert len( testmatrix.matrix[ 0 ] ) == 4, "Wrong quantity of columns"
+    assert testmatrix.GetValue( 1, 0 ) == 5, "Wrong value in matrix"
+    assert testmatrix.GetValue( 2, 3 ) == 12, "Wrong value in matrix"
     # Test the Matrix class using the standard constructor
     testmatrix = Matrix( [ [ 10, 8, 31 ], [ 14, 25, 6 ], [ 72, 85, 19 ], [ 10, 10, 12 ] ] )
     # Re-check the amount of rows

@@ -44,6 +44,15 @@ class Matrix:
         # print( "Creating matrix with {0} rows and {1} columns".format( argNRows, argNColumns ) )
         return cls( [ [ argDefaultValue for x in range( argNColumns ) ] for y in range( argNRows ) ] )
     
+    @classmethod
+    def FromSSV( cls, argList, argNRows, argNColumns ):
+        matrixItems = argList.split( ';' )
+        assert len( matrixItems ) == argNColumns * argNRows, "Number of passed items doesn't fit the requested size"
+        matrix = list()
+        for i in range( argNRows ):
+            matrix.append( [ int( x ) for x in matrixItems[ i * argNColumns : ( i * argNColumns ) + argNColumns ] ] )
+        return cls( matrix )
+    
     def GetMinimumValue( self ):
         mins = [ ( min( row ), row.index( min( row ) ) ) for row in self.matrix ]
         # print( mins )
