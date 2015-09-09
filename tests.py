@@ -64,12 +64,25 @@ def main():
     for item in testRandomKeysSolution:
         assert isinstance( item, float ), "Wrong type of element in random random keys solution vector"
     
-    # Test the Matrix class
-    testmatrix = Matrix( None, 3, 5 )
+    # Test the Matrix class using the construction method from parameters
+    testmatrix = Matrix.FromParameters( None, 3, 5 )
     # Check the amount of rows
     assert len( testmatrix.matrix ) == 3, "Wrong quantity of rows"
     # Check the amount of columns
     assert len( testmatrix.matrix[ 0 ] ) == 5, "Wrong quantity of columns"
+    # Test the Matrix class using the standard constructor
+    testmatrix = Matrix( [ [ 10, 8, 31 ], [ 14, 25, 6 ], [ 72, 85, 19 ], [ 10, 10, 12 ] ] )
+    # Re-check the amount of rows
+    assert len( testmatrix.matrix ) == 4, "Wrong quantity of rows"
+    # Re-check the amount of columns
+    assert len( testmatrix.matrix[ 0 ] ) == 3, "Wrong quantity of columns"
+    assert testmatrix.GetValue( 0, 0 ) == 10
+    assert testmatrix.GetValue( 2, 1 ) == 85
+    # print( testmatrix )
+    testmatrix.SetValue( 1, 2, 48 )
+    # print( testmatrix )
+    assert testmatrix.GetValue( 1, 2 ) == 48
+    assert testmatrix.GetMinimumValue() == ( 8, 0, 1 )
     print( "[CHECK] Matrix tests completed successfully" )
     
     return 0

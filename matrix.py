@@ -20,10 +20,36 @@
 ##############################################################################
 
 class Matrix:
-    def __init__( self, argDefaultValue, argNRows, argNColumns ):
-        print( "  Matrix constructor" )
-        self.matrix = [ [ argDefaultValue for x in range( argNColumns ) ] for y in range( argNRows ) ]
-        print( "    Creating matrix with {0} rows and {1} columns".format( len( self.matrix ), len( self.matrix[ 0 ] ) ) )
+    def __init__( self, argMatrix ):
+        # print( "Matrix constructor" )
+        self.matrix = argMatrix
+    
+    def __repr__( self ):
+        stringRepr = '['
+        for row in self.matrix:
+            stringRepr = stringRepr + str( row ) + ','
+        stringRepr = stringRepr.rstrip( ',' )
+        stringRepr = stringRepr + ']'
+        return stringRepr
+    
+    def __str__( self ):
+        stringRepr = str()
+        for row in self.matrix:
+            stringRepr = stringRepr + str( row ) + '\n'
+        stringRepr = stringRepr.rstrip()
+        return stringRepr
+    
+    @classmethod
+    def FromParameters( cls, argDefaultValue, argNRows, argNColumns ):
+        # print( "Creating matrix with {0} rows and {1} columns".format( argNRows, argNColumns ) )
+        return cls( [ [ argDefaultValue for x in range( argNColumns ) ] for y in range( argNRows ) ] )
+    
+    def GetMinimumValue( self ):
+        mins = [ ( min( row ), row.index( min( row ) ) ) for row in self.matrix ]
+        # print( mins )
+        sortedMins = sorted( mins, key = lambda item: item[ 0 ] )
+        # print( sortedMins )
+        return ( sortedMins[ 0 ][ 0 ], mins.index( sortedMins[ 0 ] ), sortedMins[ 0 ][ 1 ] )
     
     def GetValue( self, argRowIndex, argColumnIndex ):
         return self.matrix[ argRowIndex ][ argColumnIndex ]
