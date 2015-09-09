@@ -19,6 +19,8 @@
 ##
 ##############################################################################
 
+from matrix import Matrix
+
 class Builder:
     def __init__( self, argProblemString, argProblemType ):
         # First load data common to all problems
@@ -33,9 +35,9 @@ class Builder:
         if self.problemType == "QAP":
             assert len( self.problemItems ) == 4
             self.problemSize = int( self.problemItems[ 1 ] )
-            self.flowMatrix = self.LoadMatrix( self.problemItems[ 2 ], self.problemSize, self.problemSize )
+            self.flowMatrix = Matrix.FromSSV( self.problemItems[ 2 ], self.problemSize, self.problemSize )
             # print( self.flowMatrix )
-            self.distanceMatrix = self.LoadMatrix( self.problemItems[ 3 ], self.problemSize, self.problemSize )
+            self.distanceMatrix = Matrix.FromSSV( self.problemItems[ 3 ], self.problemSize, self.problemSize )
             # print( self.distanceMatrix )
         else:
             raise ValueError( "Invalid problem type encountered in 'Builder'" )

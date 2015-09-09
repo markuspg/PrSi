@@ -28,8 +28,8 @@ from qap import QAP
 def main():
     # Check for correct building of matrices
     builder = Builder( "test|3|1;2;3;4;5;6;7;8;9|1;10;100;1000;10000;1000;100;10;1", "QAP" )
-    assert builder.flowMatrix == [ [ 1, 2, 3 ], [ 4, 5, 6 ], [ 7, 8, 9 ] ]
-    assert builder.distanceMatrix == [ [ 1, 10, 100 ], [ 1000, 10000, 1000 ], [ 100, 10, 1 ] ]
+    assert builder.flowMatrix.matrix == [ [ 1, 2, 3 ], [ 4, 5, 6 ], [ 7, 8, 9 ] ]
+    assert builder.distanceMatrix.matrix == [ [ 1, 10, 100 ], [ 1000, 10000, 1000 ], [ 100, 10, 1 ] ]
     print( "[CHECK] Matrices were successfully constructed" )
     
     # Check if builder fails if an unknown problem was encountered
@@ -43,8 +43,8 @@ def main():
     qap = QAP( builder )
     assert qap.problemName == "test"
     assert qap.problemSize == 3
-    assert qap.flowMatrix == [ [ 1, 2, 3 ], [ 4, 5, 6 ], [ 7, 8, 9 ] ]
-    assert qap.distanceMatrix == [ [ 1, 10, 100 ], [ 1000, 10000, 1000 ], [ 100, 10, 1 ] ]
+    assert qap.flowMatrix.matrix == [ [ 1, 2, 3 ], [ 4, 5, 6 ], [ 7, 8, 9 ] ]
+    assert qap.distanceMatrix.matrix == [ [ 1, 10, 100 ], [ 1000, 10000, 1000 ], [ 100, 10, 1 ] ]
     print( "[CHECK] QAP was successfully constructed" )
     
     # Check for correct objective function value calculation

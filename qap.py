@@ -36,7 +36,7 @@ class QAP:
         assert len( argSolution ) == self.problemSize, "The passed solution vector is of improper size"
         
         # argSolution[ i ] - 1 is the plant, i is the location
-        return sum( [ self.distanceMatrix[ int( argSolution[ i ] ) - 1][ i ] * self.flowMatrix[ int( argSolution[ i ] ) - 1][ i ] for i in range( len( argSolution ) ) ] )
+        return sum( [ self.distanceMatrix.GetValue( int( argSolution[ i ] ) - 1, i ) * self.flowMatrix.GetValue( int( argSolution[ i ] ) - 1, i ) for i in range( len( argSolution ) ) ] )
     
     def ConvertRandomKeysToSolution( self, argRandomKeys ):
         assert len( argRandomKeys ) == self.problemSize, "The random keys vector is of improper size and would not yield a valid solution"
