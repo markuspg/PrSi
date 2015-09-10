@@ -54,10 +54,12 @@ class Matrix:
         return cls( matrix )
     
     def GetMinimumValue( self ):
+        # [ ( minimaler Zeilenwert, Index des minimalen Wertes in der Zeile (= Spalte ) ) für alle Zeilen ]
         mins = [ ( min( row ), row.index( min( row ) ) ) for row in self.matrix ]
         # print( mins )
         sortedMins = sorted( mins, key = lambda item: item[ 0 ] )
         # print( sortedMins )
+        # ( Minimum, Index der zugehörigen Zeile, Index in der zugehörigen Spalte )
         return ( sortedMins[ 0 ][ 0 ], mins.index( sortedMins[ 0 ] ), sortedMins[ 0 ][ 1 ] )
     
     def GetValue( self, argRowIndex, argColumnIndex ):
