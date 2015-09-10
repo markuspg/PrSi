@@ -47,11 +47,11 @@ class QAP:
         # Check solution vector length's-times for the smallest element
         for index in range( len( argRandomKeys ) ):
             # Add the real index of the smallest element to the solution vector
-            solution[ argRandomKeys.index( min( argRandomKeys ) ) ] = str( index + 1 )
+            solution[ argRandomKeys.index( min( argRandomKeys ) ) ] = index + 1
             # Make the smallest element really big, so it is not brought into consideration anymore
             argRandomKeys[ argRandomKeys.index( min( argRandomKeys ) ) ] = float( "+Infinity" )
         
-        return ''.join( [ x for x in solution ] )
+        return solution
     
     def CreateRandomRandomKeys( self ):
         random.seed( os.urandom( 20 ) )

@@ -48,15 +48,15 @@ def main():
     print( "[CHECK] QAP was successfully constructed" )
     
     # Check for correct objective function value calculation
-    assert qap.CalculateObjectiveValue( "123" ) == 50010, "Objective value calculation failed for assignment '123'"
-    assert qap.CalculateObjectiveValue( "321" ) == 51000, "Objective value calculation failed for assignment '321'"
-    assert qap.CalculateObjectiveValue( "132" ) == 6081, "Objective value calculation failed for assignment '132'"
+    assert qap.CalculateObjectiveValue( [ 1, 2, 3 ] ) == 50010, "Objective value calculation failed for assignment '[ 1, 2, 3 ]'"
+    assert qap.CalculateObjectiveValue( [ 3, 2, 1 ] ) == 51000, "Objective value calculation failed for assignment '[ 3, 2, 1 ]'"
+    assert qap.CalculateObjectiveValue( [ 1, 3, 2 ] ) == 6081, "Objective value calculation failed for assignment '[ 1, 3, 2 ]'"
     print( "[CHECK] All QAP objective value calculations where correct" )
     
-    assert qap.ConvertRandomKeysToSolution( [ 0.05, 0.91, 0.95 ] ) == "123", "Random key conversion failed for an equivalent of '123'"
-    assert qap.ConvertRandomKeysToSolution( [ 0.05, 0.66, 0.65 ] ) == "132", "Random key conversion failed for an equivalent of '132'"
-    assert qap.ConvertRandomKeysToSolution( [ 0.99, 0.5, 0.0001 ] ) == "321", "Random key conversion failed for an equivalent of '321'"
-    assert qap.ConvertRandomKeysToSolution( [ 0.5, 0.5, 0.0001 ] ) == "231", "Random key conversion failed for an equivalent of '231'"
+    assert qap.ConvertRandomKeysToSolution( [ 0.05, 0.91, 0.95 ] ) == [ 1, 2, 3 ], "Random key conversion failed for an equivalent of '[ 1, 2, 3 ]'"
+    assert qap.ConvertRandomKeysToSolution( [ 0.05, 0.66, 0.65 ] ) == [ 1, 3, 2 ], "Random key conversion failed for an equivalent of '[ 1, 3, 2 ]'"
+    assert qap.ConvertRandomKeysToSolution( [ 0.99, 0.5, 0.0001 ] ) == [ 3, 2, 1 ], "Random key conversion failed for an equivalent of '[ 3, 2, 1 ]'"
+    assert qap.ConvertRandomKeysToSolution( [ 0.5, 0.5, 0.0001 ] ) == [ 2, 3, 1 ], "Random key conversion failed for an equivalent of '[ 2, 3, 1 ]'"
     print( "[CHECK] Converting QAP random keys to solutions yielded valid results" )
     
     testRandomKeysSolution = qap.CreateRandomRandomKeys()

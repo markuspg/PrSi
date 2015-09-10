@@ -60,6 +60,7 @@ class TabooSearch( threading.Thread ):
     
     def Iteration( self ):
         self.iterationCount = self.iterationCount + 1
+        print( "        Iteration {0}".format( self.iterationCount ) )
         # Create a matrix storing all the costs related to the swaps
         tempSol = Matrix.FromParameters( sys.maxsize, len( self.solution ), len( self.solution ) )
         # Evaluate the complete neighbourhood accessible by simple swaps
@@ -67,10 +68,12 @@ class TabooSearch( threading.Thread ):
             for j in range( len( self.solution ) ):
                 # Only calculate necessary values (the matrix is a mirroring one)
                 if j > i:
+                    print( self.solution )
                     tempSolution = self.solution[ : ]
                     tempValue = tempSolution[ i ]
                     tempSolution[ i ] = tempSolution[ j ]
                     tempSolution[ j ] = tempValue
+                    print( tempSolution )
                     # Calculate and store the objective function value
                     tempSol.SetValue( i, j, self.problem.CalculateObjectiveValue( self.problem.ConvertRandomKeysToSolution( tempSolution ) ) )
         
