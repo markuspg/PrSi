@@ -21,6 +21,7 @@
 
 import ga
 import multiprocessing
+import random
 import threading
 import ts
 
@@ -49,13 +50,19 @@ class ManagerThread( threading.Thread ):
         # print( "      Created a random population of size {0}".format( len( population ) ) )
         return population
     
+    def DrawRandomTabooTenure( self ):
+        randomTabooTenure = random.randint( int( self.problem.problemSize * 0.9), int( self.problem.problemSize * 1.1) )
+        if randomTabooTenure < 20:
+            randomTabooTenure = 20
+        return randomTabooTenure
+    
     def run( self ):
         print( "    [MANAGER_THREAD {0} START] Running manager".format( self.name ) )
         # Initialize
         for i in range( self.gaInstances ):
             self.gaThreads.append( ga.GeneticAlgorithm( self.CreateRandomPopulation(), self.problem ) )
         for i in range( self.tsInstances ):
-            self.tsThreads.append( ts.TabooSearch( self.problem.CreateRandomRandomKeys(), self.problem ) )
+            self.tsThreads.append( ts.TabooSearch( None, self.tsGlobalMemory, i + 1, self.problem.CreateRandomRandomKeys(), self.problem, None, self.DrawRandomTabooTenure() ) )
         for thread in self.gaThreads:
             thread.start()
         for thread in self.tsThreads:

@@ -44,13 +44,13 @@ class TabooSearch( threading.Thread ):
     def __init__( self, argAspirationCriterion, argGlobalReferenceSet, argID, argInitialSolution, argProblem, argStoppingCriterion, argTabuTenure ):
         super().__init__()
         self.aspirationCriterion = argAspirationCriterion
-        self.assignedReferenceSetLocation = argGlobalReferenceSet[ argID ]
+        self.assignedReferenceSetLocation = argGlobalReferenceSet.solutions[ argID - 1 ]
         self.bestSolution = float( "+Infinity" )
-        self.globalReferenceSetIndex = argID
+        self.globalReferenceSetIndex = argID - 1
         self.globalReferenceSet = argGlobalReferenceSet
         self.iD = argID
         self.iterationCount = 0
-        self.maxFailures = 0
+        self.maxFailures = 5
         self.problem = argProblem
         self.solution = argInitialSolution
         self.stoppingCriterion = argStoppingCriterion
@@ -98,7 +98,7 @@ class TabooSearch( threading.Thread ):
         print( "    [TABOO_SEARCH_THREAD {0} START]".format( self.name ) )
         numFailures = 0
         lastIterationValue = sys.maxsize
-        while numFailures <= maxFailures:
+        while numFailures <= self.maxFailures:
             suggestedSwap = self.Iteration()
             if lastIterationValue <= suggestedSwap[ 0 ]:
                 numFailures = numFailures + 1
