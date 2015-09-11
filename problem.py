@@ -23,6 +23,7 @@ class Problem:
     def __init__( self, argBuilder ):
         print( "  Problem constructor" )
         self.problemName = argBuilder.problemName
-        print( "    Creating problem: {0}".format( self.problemName ) )
+        self.problemSize = argBuilder.problemSize
+        print( "    Creating problem '{0}' of size {1}".format( self.problemName, self.problemSize ) )
 
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4

@@ -20,13 +20,13 @@
 ##############################################################################
 
 import os
+import problem
 import random
 
-class QAP:
+class QAP( problem.Problem ):
     def __init__( self, argBuilder ):
+        super().__init__( argBuilder )
         print( "  QAP constructor" )
-        self.problemName = argBuilder.problemName
-        self.problemSize = argBuilder.problemSize
         # The matrices' rows represent the plants, the columns represent the locations
         self.distanceMatrix = argBuilder.distanceMatrix
         self.flowMatrix = argBuilder.flowMatrix
