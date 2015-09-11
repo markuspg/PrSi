@@ -42,13 +42,5 @@ class Builder:
         else:
             raise ValueError( "Invalid problem type encountered in 'Builder'" )
         print( "      Problem size: {0}".format( self.problemSize ) )
-    
-    def LoadMatrix( self, argList, argXSize, argYSize ):
-        matrixItems = argList.split( ';' )
-        assert len( matrixItems ) == argXSize * argYSize
-        matrix = list()
-        for i in range( argXSize ):
-            matrix.append( [ int( x ) for x in matrixItems[ i * argXSize : ( i * argXSize ) + argXSize ] ] )
-        return matrix
 
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4
