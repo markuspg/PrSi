@@ -22,6 +22,7 @@
 from matrix import Matrix
 
 import copy
+import random
 import sys
 import threading
 
@@ -80,19 +81,22 @@ class TabooSearch( threading.Thread ):
         bestSwap = tempSol.GetMinimumValue()
         # Find the best possible move
         while True:
-            # Check if the best swap yields an improvement at all
+            # Check if the best swap yields an improvement at all,
+            # if none was achieved, break
+            print( "bestSwap: {0}".format( bestSwap ) )
             if bestSwap[ 0 ] >= self.bestSolution:
+                print( "          Failed to improve" )
                 break
             
             # Check, if the swap is allowed concerning the taboo duration
-            if self.tabuDurations.GetValue( bestSwap[ 1 ], bestSwap[ 2 ] ) >= self.iterationCount:
-                tempSol.SetValue( bestSwap[ 1 ], bestSwap[ 2 ], sys.maxsize )
-                tempSol.SetValue( bestSwap[ 2 ], bestSwap[ 1 ], sys.maxsize )
-                bestSwap = tempSol.GetMinimumValue()
-                continue
+            # and break, if it is permissable
+            if self.tabuDurations.GetValue( bestSwap[ 1 ], bestSwap[ 2 ] ) <= self.iterationCount:
+                print( "          Doing non taboo move" )
+                break
             
-            # Break, if a best possible swap was found
-            break
+            # Load the next best solution for the next iteration
+            bestSwap = tempSol.GetMinimumValue()
+            print( "          Loaded next best solution '{0}'".format( bestSwap ) )
         
         # Return the swap found in this iteration
         return bestSwap
@@ -105,13 +109,15 @@ class TabooSearch( threading.Thread ):
             suggestedSwap = self.Iteration()
             if lastIterationValue <= suggestedSwap[ 0 ]:
                 numFailures = numFailures + 1
+                print( "      Failed to improve {0} times".format( numFailures ) )
                 # Check this behaviour later!!!
                 continue
-            Swap( suggestedSwap[ 1 ], suggestedSwap[ 2 ] )
+            self.Swap( suggestedSwap[ 1 ], suggestedSwap[ 2 ] )
             lastIterationValue = suggestedSwap[ 0 ]
         print( "    [TABOO_SEARCH_THREAD {0} FINISH]".format( self.name ) )
     
     def Swap( self, argI, argJ ):
+        print( "        Swapping facilities {0} and {1}".format( argI + 1, argJ + 1 ) )
         # Do the swap
         tempValue = self.solution[ argI ]
         self.solution[ argI ] = self.solution[ argJ ]
