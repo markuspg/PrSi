@@ -69,12 +69,13 @@ class TabooSearch( threading.Thread ):
             for j in range( len( self.solution ) ):
                 # Only calculate necessary values (the matrix is a mirroring one)
                 if j > i:
-                    print( self.solution )
+                    # print( self.solution )
                     tempSolution = self.solution[ : ]
                     tempValue = tempSolution[ i ]
                     tempSolution[ i ] = tempSolution[ j ]
                     tempSolution[ j ] = tempValue
-                    print( tempSolution )
+                    assert not tempSolution == self.solution
+                    # print( tempSolution )
                     # Calculate and store the objective function value
                     tempSol.SetValue( i, j, self.problem.CalculateObjectiveValue( self.problem.ConvertRandomKeysToSolution( tempSolution ) ) )
         
@@ -83,7 +84,7 @@ class TabooSearch( threading.Thread ):
         while True:
             # Check if the best swap yields an improvement at all,
             # if none was achieved, break
-            print( "bestSwap: {0}".format( bestSwap ) )
+            print( "          bestSwap: {0}".format( bestSwap ) )
             if bestSwap[ 0 ] >= self.bestSolution:
                 print( "          Failed to improve" )
                 break
