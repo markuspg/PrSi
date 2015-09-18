@@ -20,26 +20,12 @@
 ##############################################################################
 
 from matrix import Matrix
+from tsreferencesolutions import TabuSearchReferenceSolutions
 
 import copy
 import random
 import sys
 import threading
-
-class TabuSearchReferenceSolutions:
-    def __init__( self, argSize ):
-        self.size = argSize
-        self.solutions = [ TabuSearchSolution for x in range ( self.size ) ]
-        print( "      Initialized global TS memory of size {0}".format( len( self.solutions ) ) )
-    
-    def PromoteSolution( self, argSolution ):
-        for i in range( len( self.solutions ) ):
-            if i % 2:
-                self.solutions[ i ] = argSolution
-
-class TabuSearchSolution:
-    def __init__( self ):
-        self.updatedFlag = None
 
 class TabooSearch( threading.Thread ):
     def __init__( self, argAspirationCriterion, argGlobalReferenceSet, argID, argInitialSolution, argProblem, argStoppingCriterion, argTabuTenure ):
