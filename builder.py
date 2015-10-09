@@ -22,17 +22,17 @@
 from matrix import Matrix
 
 class Builder:
-    def __init__( self, argProblemString, argProblemType ):
+    def __init__( self, argProblemString, argOptions ):
+        self.options = argOptions
         # First load data common to all problems
         print( "  Builder constructor" )
         self.problemItems = argProblemString.rstrip( '\n' ).split( '|' )
         # print( self.problemItems )
         self.problemName = self.problemItems[0].rpartition( '/' )[ -1 ]
-        self.problemType = argProblemType
-        print( "    Building {0}-problem: {1}".format( self.problemType, self.problemName ) )
+        print( "    Building {0}-problem: {1}".format( self.options.currentProblemType, self.problemName ) )
         
         # Then load problem specific data or fail, if an unknown problem was given
-        if self.problemType == "QAP":
+        if self.options.currentProblemType == "QAP":
             assert len( self.problemItems ) == 4
             self.problemSize = int( self.problemItems[ 1 ] )
             self.flowMatrix = Matrix.FromSSV( self.problemItems[ 2 ], self.problemSize, self.problemSize )

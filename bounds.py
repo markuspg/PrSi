@@ -20,9 +20,8 @@
 ##############################################################################
 
 class Bounds:
-    def __init__( self, argMeasure, argProblem ):
+    def __init__( self, argProblem ):
         print( "  Bounds constructor" )
-        self.measure = argMeasure
         self.problem = argProblem
     
     def CalculateBounds( self ):

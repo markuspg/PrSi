@@ -27,14 +27,14 @@ from qap import QAP
 from solver import Solver
 
 class Analyzer:
-    def __init__( self, argMetaheuristicQuantities, argProblemsFileName ):
-        self.metaheuristicQuantities = argMetaheuristicQuantities
-        self.problemsFileName = argProblemsFileName
-        self.problemType = argProblemsFileName.rpartition( '.' )[ -1 ].upper()
-        print( "Will analyze problems of type '{0}' loaded from '{1}' using '{2}'".format( self.problemType, self.problemsFileName, self.metaheuristicQuantities ) )
+    def __init__( self, argOptions ):
+        self.options = argOptions
+        self.options.currentProblemFile = self.options.GetProblem()
+        self.options.currentProblemType = self.options.currentProblemFile.rpartition( '.' )[ -1 ].upper()
+        print( "Will analyze problems of type '{0}' loaded from '{1}'".format( self.options.currentProblemType, self.options.currentProblemFile ) )
     
     def LoadProblem( self, argBuilder ):
-        if argBuilder.problemType == "QAP":
+        if self.options.currentProblemType == "QAP":
             # print( "  Trying to construct a QAP instance" )
             return QAP( argBuilder )
         else:
@@ -42,20 +42,19 @@ class Analyzer:
     
     def Run( self ):
         print( "Analyzing problems" )
-        with open( self.problemsFileName, 'rt' ) as problemsFile:
+        with open( self.options.currentProblemFile, 'rt' ) as problemsFile:
             problemIndex = 0
             for line in problemsFile:
                 problemIndex = problemIndex + 1
                 print( "\n=> Problem #" + str( problemIndex ) + " will be analyzed" )
-                builder = Builder( line, self.problemType )
+                builder = Builder( line, self.options )
                 problem = self.LoadProblem( builder )
-                measure = Measure( problem )
-                bounds = Bounds( measure, problem )
-                bounds.CalculateBounds()
-                helperTuple = bounds, measure, self.metaheuristicQuantities, problem
-                solver = Solver( helperTuple )
+                problem.SetMeasure( Measure( problem ) )
+                problem.SetBounds( Bounds( problem ) )
+                problem.bounds.CalculateBounds()
+                solver = Solver( problem )
                 solver.Solve()
-                measure.Write()
+                problem.measure.Write()
         print( "Finished analyzer run" )
 
 # vim: tabstop=8 expandtab shiftwidth=4 softtabstop=4

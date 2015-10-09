@@ -20,26 +20,18 @@
 ##############################################################################
 
 import ga
-import multiprocessing
 import random
 import threading
 import ts
 
 class ManagerThread( threading.Thread ):
-    def __init__( self, argHelperTuple ):
+    def __init__( self, argProblem ):
         super().__init__()
-        self.bounds = argHelperTuple[ 0 ]
-        self.gaInstances = int( argHelperTuple[ 2 ][ "ga" ][ 0 ] )
         self.gaThreads = list()
-        self.heuristicQuantities = argHelperTuple[ 2 ]
-        self.nMaxIterations = 1000000
-        self.tsInstances = int( argHelperTuple[ 2 ][ "ts" ][ 0 ] )
-        self.tsGlobalMemory = ts.TabuSearchReferenceSolutions( self.tsInstances )
+        self.tsGlobalMemory = ts.TabuSearchReferenceSolutions( argProblem.options.tsThreadsQuantity )
         self.tsThreads = list()
-        self.measure = argHelperTuple[ 1 ]
-        self.problem = argHelperTuple[ 3 ]
-        self.cpuCores = multiprocessing.cpu_count()
-        print( "    Initializing ManagerThread to work on {0} cores".format( self.cpuCores ) )
+        self.problem = argProblem
+        print( "    Initializing ManagerThread to work on {0} cores".format( self.problem.options.cpuCores ) )
     
     def CreateRandomPopulation( self ):
         population = list()
@@ -59,9 +51,9 @@ class ManagerThread( threading.Thread ):
     def run( self ):
         print( "    [MANAGER_THREAD {0} START] Running manager".format( self.name ) )
         # Initialize
-        for i in range( self.gaInstances ):
+        for i in range( self.problem.options.gaThreadsQuantity ):
             self.gaThreads.append( ga.GeneticAlgorithm( self.CreateRandomPopulation(), self.problem ) )
-        for i in range( self.tsInstances ):
+        for i in range( self.problem.options.tsThreadsQuantity ):
             self.tsThreads.append( ts.TabooSearch( None, self.tsGlobalMemory, i + 1, self.problem.CreateRandomRandomKeys(), self.problem, None, self.DrawRandomTabooTenure() ) )
         for thread in self.gaThreads:
             thread.start()

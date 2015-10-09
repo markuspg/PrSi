@@ -21,6 +21,8 @@
 ##
 ##############################################################################
 
+from options import Options
+
 import argparse
 import multiprocessing
 import sys
@@ -40,14 +42,13 @@ def main():
     if args.ga[ 0 ] + args.ts[ 0 ] + 1 > multiprocessing.cpu_count():
         raise RuntimeError( "The number of requested cores '{0}' (+1 managing core) is bigger than the physically available quantity of '{1}' cores".format( args.ga + args.ts, multiprocessing.cpu_count() ) )
     
-    algorithmInstanceQuantities = { "ga": args.ga, "ts": args.ts }
-    problemInstances = args.problemFiles
-    
     print( "   <---- PrSi: Python reference Solver implementation ---->\n" )
     
+    options = Options( args )
+    
     # All loading, solving and analyzing work is done in 'Analyzer'
-    for problemInstancesFilePath in problemInstances:
-        analyzer = Analyzer( algorithmInstanceQuantities, problemInstancesFilePath )
+    for i in range( len( options.problemFiles ) ):
+        analyzer = Analyzer( options )
         analyzer.Run()
     
     return 0
